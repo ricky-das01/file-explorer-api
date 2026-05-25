@@ -8,12 +8,14 @@ public class FileNode {
     private String type;
     private List<FileNode> children;
     private boolean truncated;
+    private boolean skipped;
 
-    public FileNode(String name, String type, List<FileNode> children, boolean truncated) {
+    public FileNode(String name, String type, List<FileNode> children, boolean truncated, boolean skipped) {
         this.name = name;
         this.type = type;
         this.children = children;
         this.truncated = truncated;
+        this.skipped = skipped;
     }
 
     public String getName() {
@@ -30,6 +32,10 @@ public class FileNode {
 
     public boolean isTruncated() {
         return truncated;
+    }
+
+    public boolean isSkipped() {
+        return skipped;
     }
 
 }
