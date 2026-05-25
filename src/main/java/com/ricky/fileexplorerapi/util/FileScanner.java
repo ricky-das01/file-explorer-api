@@ -8,10 +8,14 @@ import java.util.List;
 
 public class FileScanner {
 
-    public static FileNode scan(File file) {
+    public static FileNode scan(File file, Integer currentDepth, Integer maxDepth) {
 
         if (file.isFile()) {
-            return new  FileNode(file.getName(), "file", null);
+            return new  FileNode(file.getName(), "file", null, false);
+        }
+
+        if (maxDepth != null && currentDepth >= maxDepth) {
+            return new FileNode(file.getName(), "directory", new ArrayList<>(), true);
         }
 
         List<FileNode> children = new ArrayList<>();
@@ -19,11 +23,11 @@ public class FileScanner {
 
         if (files != null) {
             for (File f : files) {
-                children.add(scan(f));
+                children.add(scan(f, currentDepth + 1, maxDepth));
             }
         }
 
-        return new FileNode(file.getName(), "directory", children);
+        return new FileNode(file.getName(), "directory", children, false);
 
     }
 

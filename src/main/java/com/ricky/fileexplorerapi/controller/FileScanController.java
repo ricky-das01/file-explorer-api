@@ -15,7 +15,8 @@ import java.io.File;
 public class FileScanController {
 
     @GetMapping("/scan")
-    public ResponseEntity<?> scan(@RequestParam String path) {
+    public ResponseEntity<?> scan(@RequestParam String path,
+                                  @RequestParam(required = false) Integer maxDepth) {
 
         File file = new File(path);
 
@@ -28,7 +29,7 @@ public class FileScanController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
 
-        FileNode result = FileScanner.scan(file);
+        FileNode result = FileScanner.scan(file, 0, maxDepth);
 
         return ResponseEntity.ok(result);
     }
